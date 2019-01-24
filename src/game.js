@@ -122,20 +122,23 @@ Game.updatePlayer = function(newPlayerState){
 
         var porcentaje = player.health > 0 ? player.health : 0;
         if(player.barraVida){
-            player.barraVida.x = player.x - (100-porcentaje)/2;
+            // console.log(player.barraVida)
+            player.barraVida.x = player.x;
             player.barraVida.y = player.y - 20;
+            // player.barraVida.setPosition(player.x, player.y);
             player.barraVida.width = porcentaje;
             
         }
         
         if(player.barraVidaRestante){
-            player.barraVidaRestante.x = player.x + (porcentaje/2);
-            player.barraVidaRestante.y = player.y - 20;
+            // player.barraVidaRestante.x = player.x + (porcentaje/2);
+            // player.barraVidaRestante.y = player.y - 20;
+            player.barraVidaRestante.setPosition(player.x + porcentaje, player.y - 20);
             player.barraVidaRestante.width = 100 - porcentaje;   
         }
 
         if(player.nombre){
-            player.nombre.x = player.x - (player.nombre.textWidth / 2);
+            player.nombre.x = player.x - (player.nombre.width /2);
             player.nombre.y = player.y - 40;
         }
     }
@@ -164,9 +167,9 @@ Game.update = function(){
 
 Game.addPlayer = function(id, x , y, health, name){
     //add our player and set the camera
-    // Game.playerMap[id] = this.add.sprite(x,y,'onyx');
-    Game.playerMap[id] = new Player(this, x, y);
-    Game.playerMap[id].setOrigin(.5, .5);
+    Game.playerMap[id] = this.add.sprite(x,y,'onyx');
+    // Game.playerMap[id] = new Player(this, x, y);
+    // Game.playerMap[id].setOrigin(.5);
     Game.playerMap[id].anims.load('right');
     Game.playerMap[id].anims.load('down');
     Game.playerMap[id].anims.load('up');
@@ -189,7 +192,6 @@ Game.addPlayer = function(id, x , y, health, name){
     Game.playerMap[id].nombre = Game.crearNombre(x,y-20, name);
     Game.playerMap[id].barraVida = Game.crearBarraVida(x,y, porcentaje, false);
     Game.playerMap[id].barraVidaRestante = Game.crearBarraVida(x+porcentaje,y,100, true);
-    
 
     this.input.on('pointerdown', function(pointer){
         console.log(pointer);
@@ -208,18 +210,19 @@ Game.crearBarraVida = function(x, y, health, danio) {
     // bmd.ctx.rect(0, 0, width, height);
     // bmd.ctx.fillStyle = (danio)?'#FF0000':'#00FF00';
     // bmd.ctx.fill();
-    var color = (danio)?'#FF0000':'#00FF00';
+    var color = (danio)?0xFF0000:0x00FF00;
 
-    rect = new Phaser.Geom.Rectangle(0, 0, width, height)
-    var graphics = this.add.graphics({ fillStyle: { color: 0x0000ff } });
-    graphics.fillRectShape(rect);
-    // drawnObject.anchor.setTo(0.5, 0.5);
+    // rect = new Phaser.Geom.Rectangle(0, 0, width, height)
+    // var graphics = this.add.graphics({ fillStyle: { color: 0x0000ff } });
+    // graphics.fillRectShape(rect);
+
+    rect = this.add.rectangle(x,y,width,height, color);
     return rect;
 }
 
 Game.crearNombre = function(x , y, nombre) {
-    console.log(nombre)
-    var bmpText = this.add.bitmapText(x-16, y, 'carrier_command', nombre, 10);
+    var bmpText = this.add.bitmapText(x, y, 'carrier_command', nombre, 10);
+    // bmpText.setOrigin(0,0);
     return bmpText;
 }
 
@@ -227,7 +230,7 @@ Game.addNewPlayer = function(id, x, y, health, name){
     //we add a player if it isn't our player.
     if(Game.playerMap[id] != Game.player){
         Game.playerMap[id] = this.add.sprite(x,y,'onyx');
-        Game.playerMap[id].setOrigin(.5, .5);
+        // Game.playerMap[id].setOrigin(.5);
         Game.playerMap[id].anims.load('right');
         Game.playerMap[id].anims.load('down');
         Game.playerMap[id].anims.load('up');
@@ -251,9 +254,10 @@ Game.addObject = function(id, x, y){
     // emitter.start(false, 1000, 10);
     // Game.objectList[id] = emitter;
 
-    Game.objectList[id].width=40;
-    Game.objectList[id].height=40;
-    Game.objectList[id].setOrigin(.5, .5);
+    // Game.objectList[id].width=40;
+    // Game.objectList[id].height=40;
+    Game.objectList[id].setSize(5,5);
+    // Game.objectList[id].setOrigin(.5);
 }
 
 Game.removePlayer = function(id){

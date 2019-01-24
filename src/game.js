@@ -53,9 +53,9 @@ Game.create = function(){
     aKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     dKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
-    this.anims.create({ key:'up', frames: this.anims.generateFrameNumbers('onyx', { frames: [114, 113, 112] }), frameRate: 30, repeat: false});
-    this.anims.create({ key:'down', frames: this.anims.generateFrameNumbers('onyx', { frames: [57, 58, 60] }), frameRate: 30, repeat: false});
-    this.anims.create({ key:'right', frames: this.anims.generateFrameNumbers('onyx', { frames: [0, 1] }), frameRate: 30, repeat: false});
+    this.anims.create({ key:'up', frames: this.anims.generateFrameNumbers('onyx', { frames: [114, 113, 112] }), frameRate: 30, repeat: 1 });
+    this.anims.create({ key:'down', frames: this.anims.generateFrameNumbers('onyx', { frames: [57, 58, 60] }), frameRate: 30, repeat: 1 });
+    this.anims.create({ key:'right', frames: this.anims.generateFrameNumbers('onyx', { frames: [0, 1] }), frameRate: 30, repeat: 1 });
 
     client.askNewPlayer();
 };
@@ -92,25 +92,25 @@ Game.updatePlayer = function(newPlayerState){
         //left
         if(player.x>newPlayerState.x){
             player.anims.play('right');
-            player.scaleX = -1;
+            player.flipX = true;
         }
         
         //right
         if(player.x<newPlayerState.x){
             player.anims.play('right');
-            player.scaleX = 1;
+            player.flipX = false;
         }
         
         //down
         if(player.y<newPlayerState.y){
             player.anims.play('down');
-            player.scaleX = 1;
+            player.flipX = false;
         }
         
         //up
         if(player.y>newPlayerState.y){
             player.anims.play('up');
-            player.scaleX = 1;
+            player.flipX = false;
         }
 
         if(newPlayerState.health <= 0){
@@ -187,7 +187,7 @@ Game.addPlayer = function(id, x , y, health, name){
     // this.cameras.main.width = 600;
     // this.cameras.main.setBounds(0,0,600,600);
     this.cameras.main.setSize(600,600);
-    this.cameras.main.startFollow(Game.player, true, 0.05, 0.05);
+    this.cameras.main.startFollow(Game.player, true);
     // game.camera.follow(Game.player, Phaser.Camera.FOLLOW_TOPDOWN, 0.5, 0.5);
     // futuro calculo en proporcion de la vida
     var porcentaje = 100;
@@ -289,6 +289,7 @@ const config = {
     // physics: {
     //     default: 'arcade',
     // },
+    // pixelArt: true,
     scene: Game
 	// scene: {
 	// 	preload: preload,

@@ -36,10 +36,11 @@ Game.create = function(){
     Game.objectList = [];
 
     var map = this.make.tilemap({ key: 'map' });
-    map.addTilesetImage('tilesheet', 'tileset'); // tilesheet is the key of the tileset in map's JSON file
+    var tiles = map.addTilesetImage('tilesheet', 'tileset'); // tilesheet is the key of the tileset in map's JSON file
+    // var layer = map.createStaticLayer('Tile Layer', tiles);
     var layer;
     for(var i = 0; i < map.layers.length; i++) {
-        layer = map.createStaticLayer(i);
+        layer = map.createStaticLayer(i, tiles);
     }
     //layer.inputEnabled = true; // Allows clicking on the map
     upKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
@@ -54,7 +55,7 @@ Game.create = function(){
 
     this.anims.create({ key:'up', frames: this.anims.generateFrameNumbers('onyx', { frames: [114, 113, 112] }), frameRate: 30, repeat: false});
     this.anims.create({ key:'down', frames: this.anims.generateFrameNumbers('onyx', { frames: [57, 58, 60] }), frameRate: 30, repeat: false});
-    this.anims.create({ key:'right', frames: this.anims.generateFrameNumbers('onyx', { frames: [0, 1] }), frameRate:30, repeat: false});
+    this.anims.create({ key:'right', frames: this.anims.generateFrameNumbers('onyx', { frames: [0, 1] }), frameRate: 30, repeat: false});
 
     client.askNewPlayer();
 };
@@ -175,16 +176,18 @@ Game.addPlayer = function(id, x , y, health, name){
     Game.playerMap[id].anims.load('up');
 
     Game.player = Game.playerMap[id];
-    // game.physics.enable(Game.player);
+
+    // this.physics.add.existing(Game.player);
+
     Game.playerMap[id].health = health;
     Game.playerMap[id].name = name;
     console.log(Game.player);
 
     // this.cameras.main.height = 600;
     // this.cameras.main.width = 600;
+    // this.cameras.main.setBounds(0,0,600,600);
     this.cameras.main.setSize(600,600);
-    this.cameras.main.setBounds(0,0,600,600);
-    this.cameras.main.startFollow(Game.player);
+    this.cameras.main.startFollow(Game.player, true, 0.05, 0.05);
     // game.camera.follow(Game.player, Phaser.Camera.FOLLOW_TOPDOWN, 0.5, 0.5);
     // futuro calculo en proporcion de la vida
     var porcentaje = 100;
@@ -254,9 +257,9 @@ Game.addObject = function(id, x, y){
     // emitter.start(false, 1000, 10);
     // Game.objectList[id] = emitter;
 
-    // Game.objectList[id].width=40;
-    // Game.objectList[id].height=40;
-    Game.objectList[id].setSize(5,5);
+    Game.objectList[id].displayWidth=40;
+    Game.objectList[id].displayHeight=40;
+    // Game.objectList[id].setSize(5,5);
     // Game.objectList[id].setOrigin(.5);
 }
 
@@ -283,6 +286,9 @@ const config = {
 	parent: 'phaser-example',
 	width: 800,
     height: 600,
+    // physics: {
+    //     default: 'arcade',
+    // },
     scene: Game
 	// scene: {
 	// 	preload: preload,

@@ -4,7 +4,7 @@ const webpack = require("webpack");
 const path = require("path");
 
 module.exports = {
-  entry: ["@babel/polyfill", "./src/game.js"],
+  entry: ["@babel/polyfill", "./src/main.js"],
   mode: 'development',
   devtool: 'source-map',
 

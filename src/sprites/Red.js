@@ -8,9 +8,9 @@ export default class Red extends Phaser.GameObjects.Sprite {
         this.particles = scene.add.particles('flares');
         var emiter = this.particles.createEmitter({
             frame: 'red',
-            lifespan: 100,
+            lifespan: 200,
             // speed: { min: 400, max: 600 },
-            angle: 330,
+            // angle: 330,
             // gravityY: 300,
             scale: { start: 0.2, end: 0 },
             quantity: 2,

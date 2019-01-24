@@ -15,20 +15,11 @@ class GameScene extends Phaser.Scene {
         this.player = null;
     }
     
-    // init(){
-    // }
+    init(data){
+        this.playerName = data.playerName;
+    }
     
     preload() {
-        // this.load.tilemap('map', 'assets/map/example_map.json', null, Phaser.Tilemap.TILED_JSON);
-        this.load.tilemapTiledJSON({
-            key: 'map',
-            url: 'assets/map/example_map.json'
-        });
-        this.load.spritesheet('tileset', 'assets/map/tilesheet.png',{ frameWidth: 32, frameHeight: 32 });
-        this.load.spritesheet('onyx', 'assets/sprites/qgzlX80.png',{ frameWidth: 32, frameHeight: 32 });
-        this.load.image('red', 'assets/sprites/red.png');
-        this.load.bitmapFont('carrier_command', 'assets/fonts/carrier_command.png', 'assets/fonts/carrier_command.xml');
-        this.load.atlas('flares', 'assets/particles/flares.png', 'assets/particles/flares.json');
     };
     
     create(){
@@ -47,7 +38,7 @@ class GameScene extends Phaser.Scene {
         this.anims.create({ key:'down', frames: this.anims.generateFrameNumbers('onyx', { frames: [57, 58, 60] }), frameRate: 30, repeat: 1 });
         this.anims.create({ key:'right', frames: this.anims.generateFrameNumbers('onyx', { frames: [0, 1] }), frameRate: 30, repeat: 1 });
     
-        this.client.askNewPlayer();
+        this.client.askNewPlayer(this.playerName);
     };
     
     updateState(pack){

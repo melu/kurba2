@@ -41,8 +41,8 @@ export default class Client {
             self.game.removePlayer(id);
         })
 
-        this.askNewPlayer = function(){
-            this.socket.emit('newplayer', 'playerName');
+        this.askNewPlayer = function(name){
+            this.socket.emit('newplayer', name);
         };
 
         this.moveUp = function(){

@@ -63,7 +63,6 @@ export default class Game {
     
         for(var socketIndex in this.PLAYER_LIST){
             var player = this.PLAYER_LIST[socketIndex];
-            console.log(player);
             if(player){
                 player.updatePosition();
                 pack.players.push(player);

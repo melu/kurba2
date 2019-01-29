@@ -55,7 +55,6 @@ class GameScene extends Phaser.Scene {
                 this.playerMap[newPlayerState.id].updateState(newPlayerState);
 
                 if(damage !==0 ) {
-                    // console.log(damage);
                     this.hpList.push(new TextDamage(this, newPlayerState.x, newPlayerState.y, damage))
                 }
             }

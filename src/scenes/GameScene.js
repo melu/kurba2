@@ -3,6 +3,7 @@ import Client from '../Client';
 import Player from '../sprites/Player';
 import Red from '../sprites/Red';
 import PlayerInput from '../helpers/PlayerInput'
+import TextDamage from '../sprites/TextDamage';
 
 class GameScene extends Phaser.Scene {
     constructor(test) {
@@ -13,6 +14,8 @@ class GameScene extends Phaser.Scene {
         this.client = new Client(this);
         
         this.player = null;
+
+        this.hpList = [];
     }
     
     init(data){
@@ -47,7 +50,14 @@ class GameScene extends Phaser.Scene {
 
             // check that player exists
             if(this.playerMap && this.playerMap[newPlayerState.id]){
+
+                var damage = this.playerMap[newPlayerState.id].health - newPlayerState.health;
                 this.playerMap[newPlayerState.id].updateState(newPlayerState);
+
+                if(damage !==0 ) {
+                    // console.log(damage);
+                    this.hpList.push(new TextDamage(this, newPlayerState.x, newPlayerState.y, damage))
+                }
             }
         }
     
@@ -73,6 +83,15 @@ class GameScene extends Phaser.Scene {
     // player input
     update(){
         this.playerInput.checkInput();
+
+        for(var hpIndex in this.hpList) {
+            var hp = this.hpList[hpIndex];
+            hp.updateState();
+            if(hp && hp.remove){
+                hp.destroy();
+                delete this.hpList[hpIndex];
+            }
+        }
     }
     
     addPlayer(id, x , y, health, name){

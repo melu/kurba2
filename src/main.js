@@ -12,7 +12,10 @@ const config = {
     //     default: 'arcade',
     // },
     // pixelArt: true,
-    // scene: Game
+    // scene: Game,
+    fps: {
+        target: 15,
+        },
     scene: [
         // BootScene,
         // TitleScene,

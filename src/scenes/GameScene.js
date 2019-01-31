@@ -57,6 +57,10 @@ class GameScene extends Phaser.Scene {
                 if(damage !==0 ) {
                     this.hpList.push(new TextDamage(this, newPlayerState.x, newPlayerState.y, damage))
                 }
+
+                if(newPlayerState.health <= 0 && this.player.id == newPlayerState.id){
+                    this.gameOverPopup();
+                }
             }
         }
     
@@ -76,7 +80,8 @@ class GameScene extends Phaser.Scene {
     }
     
     gameOverPopup () {
-    
+        this.scene.launch('GameOverScene');
+        // this.scene.setActive(false, this.currentScene);
     }
     
     // player input
@@ -95,7 +100,7 @@ class GameScene extends Phaser.Scene {
     
     addPlayer(id, x , y, health, name){
         //add our player and set the camera
-        this.playerMap[id] = new Player(this, x, y, health, name);
+        this.playerMap[id] = new Player(this, x, y, health, name, id);
         this.player = this.playerMap[id];
     
         // this.cameras.main.setBounds(0,0,600,600);
@@ -106,7 +111,7 @@ class GameScene extends Phaser.Scene {
     addNewPlayer(id, x, y, health, name){
         //we add a player if it isn't our player.
         if(this.playerMap[id] != this.player){
-            this.playerMap[id] =  new Player(this, x, y, health, name);
+            this.playerMap[id] =  new Player(this, x, y, health, name, id);
         }
     };
     

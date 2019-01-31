@@ -14,6 +14,13 @@ export default class Player {
         this._moveRight = false;
     }
 
+    restart(x,y) {
+        this.x =  x;
+        this.y =  y;
+        this.health = 100;
+        this.stun =  false;
+    }
+
     updatePosition() {
         // if the player is dead we stun him
         if(this.health <= 0) {

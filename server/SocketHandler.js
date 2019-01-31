@@ -29,6 +29,10 @@ export default class SocketHandler {
                 socket.on('shoot', function(pointer){
                     game.shoot(socket.player, pointer);
                 })
+
+                socket.on('restart', function(){
+                    game.restartPlayer(socket.player);
+                })
         
                 // gestionamos la desconexion
                 socket.on('disconnect', function(){

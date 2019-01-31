@@ -32,6 +32,7 @@ class BootScene extends Phaser.Scene {
         this.load.image('red', 'assets/sprites/red.png');
         this.load.bitmapFont('carrier_command', 'assets/fonts/carrier_command.png', 'assets/fonts/carrier_command.xml');
         this.load.atlas('flares', 'assets/particles/flares.png', 'assets/particles/flares.json');
+        this.load.atlasXML('ui', 'assets/ui/redSheet.png', 'assets/ui/redSheet.xml');
     }
 
 }

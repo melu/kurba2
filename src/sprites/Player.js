@@ -1,5 +1,5 @@
 export default class Player extends Phaser.GameObjects.Sprite {
-    constructor (scene, x, y, health, name)
+    constructor (scene, x, y, health, name, id)
     {
         super(scene, x, y, 'onyx');
         scene.add.existing(this);
@@ -16,6 +16,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
         this.health = health;
         this.name = name;
+        this.id = id;
     }
 
     crearBarraVida(scene, width, danio) {

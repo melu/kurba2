@@ -18,6 +18,12 @@ export default class Game {
         return newPlayer;
     }
 
+    restartPlayer(player) {
+        if(player.health <= 0) {
+            player.restart(this.randomInt(100,400), this.randomInt(100,400));
+        }
+    }
+
     shoot(player, pointer) {
         if(!player.stun) {
             var angle = Math.atan2(pointer.y - player.y, pointer.x - player.x);

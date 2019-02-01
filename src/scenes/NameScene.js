@@ -39,7 +39,9 @@ class NameScene extends Phaser.Scene {
         {
             this.scene.start('GameScene', {playerName: this.playerName});
         }
-        else if (code >= Phaser.Input.Keyboard.KeyCodes.A && code <= Phaser.Input.Keyboard.KeyCodes.Z)
+        else if (
+            (code >= Phaser.Input.Keyboard.KeyCodes.A && code <= Phaser.Input.Keyboard.KeyCodes.Z)
+            || (code >= Phaser.Input.Keyboard.KeyCodes.ZERO && code <= Phaser.Input.Keyboard.KeyCodes.NINE) )
         {
             this.playerName = this.playerName + event.key;
             code -= 65;

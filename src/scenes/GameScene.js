@@ -80,7 +80,17 @@ class GameScene extends Phaser.Scene {
     }
     
     gameOverPopup () {
-        this.scene.launch('GameOverScene');
+        if(!this.gameOverScene){
+            var self= this;
+            this.gameOverScene = this.scene.launch('GameOverScene', { restartPushed: function(){
+                self.client.restart();
+                self.scene.setVisible(false, this.gameOverScene);
+            }});
+            // this.gameOverScene.scene.events.on('restartPushed');
+        } else {
+            this.scene.setVisible(true, this.gameOverScene);
+        }
+        this.game
         // this.scene.setActive(false, this.currentScene);
     }
     

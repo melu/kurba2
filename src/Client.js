@@ -66,6 +66,10 @@ export default class Client {
             this.socket.emit('chat');
         }
 
+        this.restart = function(){
+            this.socket.emit('restart');
+        }
+
         this.socket.on('recieveChat', function(chat){
             self.game.showChat(chat);
         })

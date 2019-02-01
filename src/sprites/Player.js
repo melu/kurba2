@@ -58,6 +58,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
         if(newPlayerState.health <= 0){
             this.tint = "#808080";
+        } else if(this.isTinted) {
+            this.tint = 0xffffff;
         }
 
         this.x = newPlayerState.x;

@@ -4,9 +4,11 @@
   "description": "A Phaser 3 Project Template",
   "main": "src/main.js",
   "scripts": {
-    "build": "webpack",
-    "start": "npm run build && webpack-dev-server --port=8000",
-    "server": "nodemon ./server/server.js --exec babel-node"
+    "build": "webpack --mode production",
+    "start": "npm run build && nodemon ./server.js --exec babel-node",
+    "client": "webpack && webpack-dev-server --port=8000",
+    "server": "nodemon ./server.js --exec babel-node",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -26,6 +28,7 @@
     "@babel/polyfill": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "babel-loader": "^8.0.5",
+    "concurrently": "^4.1.0",
     "raw-loader": "^0.5.1",
     "webpack": "^4.0.0",
     "webpack-cli": "^3.1.2",

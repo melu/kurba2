@@ -21,7 +21,7 @@ export default class Game {
 
     restartPlayer(player) {
         if(player.health <= 0) {
-            player.restart(this.randomInt(100,400), this.randomInt(100,400));
+            player.restart(Utils.randomInt(100,400), Utils.randomInt(100,400));
         }
     }
 

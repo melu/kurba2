@@ -6,7 +6,8 @@ export default class Client {
 
     constructor(scene){
         this.game = scene;
-        this.socket = io.connect("localhost:8081");
+        var ioUrl = (PRODUCTION)? window.location.href : "localhost:8080";
+        this.socket = io.connect(ioUrl);
         var self = this;
 
         this.socket.on('newplayer', function(data){

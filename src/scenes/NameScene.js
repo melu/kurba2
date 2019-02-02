@@ -28,7 +28,7 @@ class NameScene extends Phaser.Scene {
 
     anyKey (event)
     {
-        //  Only allow A-Z . and -
+        //  Only allow A-Z . and 0-9
 
         let code = event.keyCode;
         if (code === Phaser.Input.Keyboard.KeyCodes.BACKSPACE || code === Phaser.Input.Keyboard.KeyCodes.DELETE)

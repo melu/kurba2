@@ -13,6 +13,10 @@ export default class PlayerInput {
         this.aKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.dKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
+        this.pointer = scene.input.mousePointer;
+
+        this.spaceKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
         scene.input.on('pointerdown', function(pointer){
             this.client.shoot({x:pointer.worldX, y:pointer.worldY});
         }, this);
@@ -36,6 +40,10 @@ export default class PlayerInput {
         else if (this.rightKey.isDown || this.dKey.isDown)
         {
             this.client.moveRight();
+        }
+
+        if(this.spaceKey.isDown){
+            this.client.dash({x:this.pointer.worldX, y:this.pointer.worldY});
         }
     }
 }

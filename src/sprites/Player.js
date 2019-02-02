@@ -14,6 +14,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.barraVidaRestante = this.crearBarraVida(scene, 100, true);
         this.nombre = this.crearNombre(scene, name);
 
+        this.dashing = false;
+
         this.health = health;
         this.name = name;
         this.id = id;
@@ -62,9 +64,16 @@ export default class Player extends Phaser.GameObjects.Sprite {
             this.tint = 0xffffff;
         }
 
+        if(newPlayerState._dashing){
+            this.alpha = 0.5;
+        } else {
+            this.alpha = 1;
+        }
+
         this.x = newPlayerState.x;
         this.y = newPlayerState.y;
         this.health = newPlayerState.health;
+        this.dashing = newPlayerState.dashing;
 
         var porcentaje = this.health > 0 ? this.health : 0;
         if(this.barraVida){

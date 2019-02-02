@@ -1,19 +1,20 @@
-import Player from './Player';
-import Bullet from './Bullet';
+import Player from './Models/Player';
+import Bullet from './Models/Bullet';
 import SocketHandler from './SocketHandler';
+import * as Constants from './Constants';
+import * as Utils from './Helper/Utils';
 
 export default class Game {
 
     constructor(io) {
         this.lastPlayderID = 0;
-        this.BULLET_SPEED = 5;
         this.OBJECT_LIST = [];
         this.PLAYER_LIST = [];
         this.socketHandler = new SocketHandler(this, io);
     }
 
     addPlayer(playerName) {
-        var newPlayer = new Player(this.lastPlayderID++, playerName, this.randomInt(100,400), this.randomInt(100,400));
+        var newPlayer = new Player(this.lastPlayderID++, playerName, Utils.randomInt(100,400), Utils.randomInt(100,400));
         this.PLAYER_LIST[newPlayer.id] = newPlayer;
         return newPlayer;
     }
@@ -25,13 +26,11 @@ export default class Game {
     }
 
     shoot(player, pointer) {
-        if(!player.stun) {
+        if(!player.stun && player.gcd <= 0) {
             var angle = Math.atan2(pointer.y - player.y, pointer.x - player.x);
-            var velocityX = Math.cos(angle) * this.BULLET_SPEED;
-            var velocityY = Math.sin(angle) * this.BULLET_SPEED;
-
-            var bullet = new Bullet(Math.random(), player.id, player.x, player.y, velocityX, velocityY);
-            this.OBJECT_LIST.push(bullet)
+            var bullet = new Bullet(Math.random(), player.id, player.x, player.y, angle);
+            this.OBJECT_LIST.push(bullet);
+            this.gcd = Constants.GCD;
         }
     }
 
@@ -46,7 +45,7 @@ export default class Game {
 
     start() {
         var self = this;
-        setInterval(function() { self.loop() }, 1000/25);
+        setInterval(function() { self.loop() }, 1000 / Constants.FPS);
     }
 
     loop() {
@@ -76,10 +75,6 @@ export default class Game {
         };
     
         this.socketHandler.emitState(pack);
-    }
-
-    randomInt(low, high){
-        return Math.floor(Math.random() * (high - low) + low);
     }
     
     getAllPlayers(player){

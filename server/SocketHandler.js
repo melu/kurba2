@@ -1,5 +1,3 @@
-import Bullet from "./Bullet";
-
 export default class SocketHandler {
     constructor(game, io){
         this.game = game;
@@ -28,6 +26,10 @@ export default class SocketHandler {
         
                 socket.on('shoot', function(pointer){
                     game.shoot(socket.player, pointer);
+                })
+
+                socket.on('dash', function(pointer){
+                    socket.player.dash(pointer);
                 })
 
                 socket.on('restart', function(){

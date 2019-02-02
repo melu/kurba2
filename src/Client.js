@@ -62,6 +62,10 @@ export default class Client {
             this.socket.emit("shoot", pointer);
         }
 
+        this.dash = function(pointer){
+            this.socket.emit("dash", pointer);
+        }
+
         this.chat = function(){
             this.socket.emit('chat');
         }

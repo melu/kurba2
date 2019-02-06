@@ -67,16 +67,24 @@ export default class Client {
             this.socket.emit("dash", pointer);
         }
 
-        this.chat = function(){
-            this.socket.emit('chat');
+        this.chat = function(message){
+            this.socket.emit('chat', message);
         }
 
         this.restart = function(){
             this.socket.emit('restart');
         }
 
+        //TODO: Extract from here
+        var cm = document.getElementById("chat-messages");
         this.socket.on('recieveChat', function(chat){
-            self.game.showChat(chat);
+            var ms = document.createElement("li");
+            ms.className = "chat-message";
+            
+            ms.innerHTML = "<span>"+ chat.name +"</span>: "+chat.message;
+            cm.appendChild(ms);
+            console.log(chat.name)
+            console.log(chat.message)
         })
     }
 

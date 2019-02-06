@@ -32,6 +32,10 @@ export default class SocketHandler {
                     socket.player.dash(pointer);
                 })
 
+                socket.on('chat', function(message){
+                    io.emit('recieveChat', { name:playerName,  message:message});
+                })
+
                 socket.on('restart', function(){
                     game.restartPlayer(socket.player);
                 })

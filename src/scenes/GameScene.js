@@ -26,7 +26,6 @@ class GameScene extends Phaser.Scene {
     };
     
     create(){
-        this.playerInput = new PlayerInput(this, this.client);
         this.playerMap = {};
         this.objectList = [];
     
@@ -98,7 +97,9 @@ class GameScene extends Phaser.Scene {
     
     // player input
     update(){
-        this.playerInput.checkInput();
+        //we check the player input after the input is created, when the player is added to the game   
+        if(this.playerInput)
+            this.playerInput.checkInput();
 
         for(var hpIndex in this.hpList) {
             var hp = this.hpList[hpIndex];
@@ -110,6 +111,7 @@ class GameScene extends Phaser.Scene {
         }
     }
     
+    // our client player
     addPlayer(id, x , y, health, name){
         //add our player and set the camera
         this.playerMap[id] = new Player(this, x, y, health, name, id);
@@ -118,6 +120,7 @@ class GameScene extends Phaser.Scene {
         // this.cameras.main.setBounds(0,0,600,600);
         this.cameras.main.setSize(600,600);
         this.cameras.main.startFollow(this.player, true);
+        this.playerInput = new PlayerInput(this, this.client);
     }
     
     addNewPlayer(id, x, y, health, name){

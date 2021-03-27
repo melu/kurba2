@@ -73,11 +73,18 @@ export default class ChatPanel {
         this.messages.push(messageObject)
 
         if(this.messages.length > 10){
-            this.messages.shift();
+            var m = this.messages.shift();
+            m.destroy();
         }
 
         for(var i = 0; i < this.messages.length; i++){
-            this.messages[i].y -= 12
+            var m = this.messages[i];
+            m.y -= 12;
+
+            if(i < 3 && this.messages.length >= 10){
+                m.setAlpha(i * 0.2)
+            }
+            
         }
     }
 

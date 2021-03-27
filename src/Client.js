@@ -75,16 +75,8 @@ export default class Client {
             this.socket.emit('restart');
         }
 
-        //TODO: Extract from here
-        var cm = document.getElementById("chat-messages");
         this.socket.on('recieveChat', function(chat){
-            var ms = document.createElement("li");
-            ms.className = "chat-message";
-            
-            ms.innerHTML = "<span>"+ chat.name +"</span>: "+chat.message;
-            cm.appendChild(ms);
-            console.log(chat.name)
-            console.log(chat.message)
+            self.game.chat.receiveMessage(chat.name, chat.message);
         })
     }
 

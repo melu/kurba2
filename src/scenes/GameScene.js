@@ -4,6 +4,7 @@ import Player from '../sprites/Player';
 import Red from '../sprites/Red';
 import PlayerInput from '../helpers/PlayerInput'
 import TextDamage from '../sprites/TextDamage';
+import ChatPanel from '../ui/Chat';
 
 class GameScene extends Phaser.Scene {
     constructor(test) {
@@ -97,8 +98,9 @@ class GameScene extends Phaser.Scene {
     
     // player input
     update(){
+        
         //we check the player input after the input is created, when the player is added to the game   
-        if(this.playerInput)
+        if(this.playerInput && !this.chat.active)
             this.playerInput.checkInput();
 
         for(var hpIndex in this.hpList) {
@@ -120,6 +122,7 @@ class GameScene extends Phaser.Scene {
         // this.cameras.main.setBounds(0,0,600,600);
         this.cameras.main.setSize(600,600);
         this.cameras.main.startFollow(this.player, true);
+        this.chat = new ChatPanel(this, this.client);
         this.playerInput = new PlayerInput(this, this.client);
     }
     
